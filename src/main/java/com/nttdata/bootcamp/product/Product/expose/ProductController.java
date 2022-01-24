@@ -52,6 +52,7 @@ public class ProductController {
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
 
+    //Delete logic
     @DeleteMapping("/{id}")
     public Mono<ResponseEntity<Product>> delete(@PathVariable("id") String id) {
         log.info("delete>>>>>");
