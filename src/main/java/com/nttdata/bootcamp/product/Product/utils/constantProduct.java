@@ -5,5 +5,7 @@ public enum constantProduct {
     PASSIVES,
     SAVING,
     CURRENT,
-    FIXED_TERM
+    FIXED_TERM,
+    VIP,
+    PYME
 }
