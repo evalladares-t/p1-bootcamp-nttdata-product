@@ -7,5 +7,6 @@ public enum constantProduct {
     CURRENT,
     FIXED_TERM,
     VIP,
-    PYME
+    PYME,
+    P2P
 }

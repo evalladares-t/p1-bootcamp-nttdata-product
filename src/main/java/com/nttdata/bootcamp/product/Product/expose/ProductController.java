@@ -2,6 +2,7 @@ package com.nttdata.bootcamp.product.Product.expose;
 
 import com.nttdata.bootcamp.product.Product.bussiness.ProductService;
 import com.nttdata.bootcamp.product.Product.model.Product;
+import com.nttdata.bootcamp.product.Product.model.dto.RateDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -61,4 +62,11 @@ public class ProductController {
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
     }
 
+    //Create
+    @PostMapping("/rate")
+    public Mono<ResponseEntity<Mono<Product>>> addRate(@RequestBody RateDto rate, @RequestParam("product_id") String product_id){
+      return Mono.just(ResponseEntity.ok()
+              .contentType(MediaType.APPLICATION_JSON)
+              .body(productService.addRate(rate, product_id)));
+    }
 }

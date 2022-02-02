@@ -1,18 +1,23 @@
 package com.nttdata.bootcamp.product.Product.bussiness.impl;
 
 import com.nttdata.bootcamp.product.Product.bussiness.ProductService;
+import com.nttdata.bootcamp.product.Product.bussiness.helper.ProductHelper;
 import com.nttdata.bootcamp.product.Product.model.Product;
+import com.nttdata.bootcamp.product.Product.model.dto.RateDto;
 import com.nttdata.bootcamp.product.Product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private ProductHelper productHelper;
 
     @Override
     public Mono<Product> create(Product product) {
@@ -46,5 +51,16 @@ public class ProductServiceImpl implements ProductService {
                     p.setActive(false);
                     return productRepository.save(p);
                 });
+    }
+
+    @Override
+    public Mono<Product> addRate(RateDto rate,String product_id) {
+      Mono<Product> product =  findById(product_id);
+      return product.flatMap(objProduct->{
+        return productHelper.addRate(objProduct, rate);
+      }).flatMap(newProduct -> {
+        return productRepository.save(newProduct);
+      });
+
     }
 }
